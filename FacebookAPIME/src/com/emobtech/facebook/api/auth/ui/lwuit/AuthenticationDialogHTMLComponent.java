@@ -1,13 +1,14 @@
 package com.emobtech.facebook.api.auth.ui.lwuit;
 
 import com.emobtech.facebook.api.auth.AuthenticationListener;
-import com.emobtech.facebook.api.auth.Permission;
+import com.emobtech.facebook.api.auth.ui.AuthenticationDialog;
 
 /**
  * @author 82177082315
  *
  */
-public final class AuthenticationDialog {
+public final class AuthenticationDialogHTMLComponent
+	implements AuthenticationDialog {
 	/**
 	 * <p>
 	 * App Id.
@@ -43,49 +44,49 @@ public final class AuthenticationDialog {
 	private AuthenticationListener loginListener;
 
 	/**
-	 * <p>
-	 * </p>
-	 * @param appId
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setAppId(java.lang.String)
 	 */
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
 	
 	/**
-	 * <p>
-	 * </p>
-	 * @param appSecret
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setAppSecret(java.lang.String)
 	 */
 	public void setAppSecret(String appSecret) {
 		this.appSecret = appSecret;
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 * @param redirectUri
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setRedirectUri(java.lang.String)
 	 */
 	public void setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 * @param permissions
-	 * @see Permission
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setPermissions(java.lang.String[])
 	 */
 	public void setPermissions(String[] permissions) {
 		this.permissions = permissions;
 	}
 
 	/**
-	 * <p>
-	 * Sets the login listener object.
-	 * </p>
-	 * @param listener Listener object.
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#addLoginDialogListener(com.emobtech.facebook.api.auth.AuthenticationListener)
 	 */
 	public void addLoginDialogListener(AuthenticationListener listener) {
 		loginListener = listener;
+	}
+
+	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#login()
+	 */
+	public void login() {
+	}
+
+	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#logout()
+	 */
+	public void logout() {
 	}
 }
