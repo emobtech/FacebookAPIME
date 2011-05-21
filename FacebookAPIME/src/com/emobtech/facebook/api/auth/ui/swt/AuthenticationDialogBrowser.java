@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import com.emobtech.facebook.api.auth.AccessToken;
 import com.emobtech.facebook.api.auth.AuthenticationListener;
-import com.emobtech.facebook.api.auth.Permission;
+import com.emobtech.facebook.api.auth.ui.AuthenticationDialog;
 import com.twitterapime.util.StringUtil;
 
 /**
@@ -18,7 +18,8 @@ import com.twitterapime.util.StringUtil;
  * </p>
  * @author ernandes@gmail.com
  */
-public final class AuthenticationDialog extends Browser {
+public final class AuthenticationDialogBrowser extends Browser
+	implements AuthenticationDialog {
 	/**
 	 * <p>
 	 * App Id.
@@ -93,44 +94,35 @@ public final class AuthenticationDialog extends Browser {
 	 * @param composite Composite.
 	 * @param layout Layout.
 	 */
-	public AuthenticationDialog(Composite composite, int layout) {
+	public AuthenticationDialogBrowser(Composite composite, int layout) {
 		super(composite, layout);
 		//
 		addProgressListener(new LoginDialogProgressListener());
 	}
 	
 	/**
-	 * <p>
-	 * </p>
-	 * @param appId
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setAppId(java.lang.String)
 	 */
 	public void setAppId(String appId) {
 		this.appId = appId;
 	}
 	
 	/**
-	 * <p>
-	 * </p>
-	 * @param appSecret
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setAppSecret(java.lang.String)
 	 */
 	public void setAppSecret(String appSecret) {
 		this.appSecret = appSecret;
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 * @param redirectUri
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setRedirectUri(java.lang.String)
 	 */
 	public void setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 * @param permissions
-	 * @see Permission
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#setPermissions(java.lang.String[])
 	 */
 	public void setPermissions(String[] permissions) {
 		this.permissions = permissions;
@@ -138,18 +130,14 @@ public final class AuthenticationDialog extends Browser {
 
 	/**
 	 * <p>
-	 * Sets the login listener object.
-	 * </p>
-	 * @param listener Listener object.
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#addLoginDialogListener(com.emobtech.facebook.api.auth.AuthenticationListener)
 	 */
 	public void addLoginDialogListener(AuthenticationListener listener) {
 		loginListener = listener;
 	}
 
 	/**
-	 * <p>
-	 * </p>
-	 * @throws IllegalArgumentException
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#login()
 	 */
 	public void login() {
 		if (StringUtil.isEmpty(appId) || StringUtil.isEmpty(appSecret)) {
@@ -178,8 +166,7 @@ public final class AuthenticationDialog extends Browser {
 	}
 	
 	/**
-	 * <p>
-	 * </p>
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#logout()
 	 */
 	public void logout() {
 		setUrl("http://m.facebook.com/logout.php?confirm=1&next=http://www.facebook.com");
@@ -190,7 +177,7 @@ public final class AuthenticationDialog extends Browser {
 	/**
 	 * <p>
 	 * </p>
-	 * @author 82177082315
+	 * @author ernandes@gmail.com
 	 */
 	private class LoginDialogProgressListener implements ProgressListener {
 		/**
