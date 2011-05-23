@@ -4,11 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.microedition.io.Connector;
-import javax.microedition.io.HttpConnection;
-import javax.microedition.lcdui.Image;
-
 import com.emobtech.facebook.api.Request;
+import com.twitterapime.io.HttpConnection;
+import com.twitterapime.io.HttpRequest;
+import com.twitterapime.io.HttpResponse;
 import com.twitterapime.util.StringUtil;
 
 /**
@@ -47,23 +46,26 @@ public final class Picture implements Request {
 		throws IOException {
 		String url = "https://graph.facebook.com/" + userId + "/picture";
 		//
-		HttpConnection conn = null;
+		HttpRequest req = null;
 		//
 		try {
-			conn = (HttpConnection)Connector.open(url);
+			req = new HttpRequest(url);
 			//
-			int rcode = conn.getResponseCode();
+			HttpResponse resp = req.send();
+			int rcode = resp.getCode();
 			//
 			if (rcode >= 300 && rcode < 400) { //redirected?
-				url = conn.getHeaderField("Location");
-				conn.close();
+				url = resp.getResponseField("Location");
+				req.close();
 				//
-				conn = (HttpConnection)Connector.open(url);
-				rcode = conn.getResponseCode();
+				req = new HttpRequest(url);
+				//
+				resp = req.send();
+				rcode = resp.getCode();
 			}
 			//
 			if (rcode == HttpConnection.HTTP_OK) {
-				InputStream in = conn.openInputStream();
+				InputStream in = resp.getStream();
 				//
 				byte[] buffer = new byte[1024];
 				ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
@@ -77,8 +79,8 @@ public final class Picture implements Request {
 				throw new IOException("HTTP: " + rcode);
 			}
 		} finally {
-			if (conn != null) {
-				conn.close();
+			if (req != null) {
+				req.close();
 			}
 		}
 	}
@@ -115,16 +117,6 @@ public final class Picture implements Request {
 		 */
 		public byte[] getData() {
 			return data;
-		}
-		
-		/**
-		 * <p>
-		 * Returns image object.
-		 * </p>
-		 * @return Object.
-		 */
-		public Image getImage() {
-			return Image.createImage(data, 0, data.length);
 		}
 	}
 }
