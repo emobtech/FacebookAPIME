@@ -140,7 +140,7 @@
 		<wtkpreverify classpathref="fbapime.classpath" jarfile="${fbapime.version.path.dist}/${fbapime.version.jar}"/>
 	</target>
 
-	<target name="-run" depends="-classpath_eswt, -classpath_android, -classpath_rim, -classpath_lwuit, -compile, -lib_eswt, -lib_android, -lib_rim, -lib_lwuit, -preverify_eswt, -preverify_rim, -preverify_lwuit, -findbugs, -package"/>
+	<target name="-run" depends="-classpath_eswt, -classpath_android, -classpath_rim, -classpath_lwuit, -compile, -lib_eswt, -lib_android, -lib_rim, -lib_lwuit, -preverify_eswt, -preverify_rim, -preverify_lwuit, -findbugs, +javadoc, -package"/>
 	
 	<target name="+build_eswt">
 		<antcall target="-run">
@@ -255,7 +255,5 @@
 		</zip>
 	</target>
 	
-	<target name="+build_all" depends="+build_eswt, +build_android, +build_rim"/>
-	
-	<target name="+release" depends="+build_all, +javadoc"/>
+	<target name="+build_all" depends="+build_eswt, +build_android, +build_rim, +build_lwuit"/>
 </project>
