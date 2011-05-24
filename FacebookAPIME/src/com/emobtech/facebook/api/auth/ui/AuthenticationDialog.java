@@ -40,12 +40,14 @@ public interface AuthenticationDialog {
 	public void setPermissions(String[] permissions);
 
 	/**
-	 * <p>
-	 * Sets the login listener object.
-	 * </p>
-	 * @param listener Listener object.
+	 * @param listener
 	 */
-	public void addLoginDialogListener(AuthenticationListener listener);
+	public void addAuthenticationListener(AuthenticationListener listener);
+
+	/**
+	 * @param listener
+	 */
+	public void removeAuthenticationListener(AuthenticationListener listener);
 
 	/**
 	 * <p>
