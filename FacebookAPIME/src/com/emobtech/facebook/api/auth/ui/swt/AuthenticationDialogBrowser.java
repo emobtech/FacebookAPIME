@@ -1,6 +1,8 @@
 package com.emobtech.facebook.api.auth.ui.swt;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -49,10 +51,9 @@ public final class AuthenticationDialogBrowser extends Browser
 	
 	/**
 	 * <p>
-	 * Login listener object.
 	 * </p>
 	 */
-	private AuthenticationListener loginListener;
+	private Vector authListeners;
 	
 	/**
 	 * <p>
@@ -89,15 +90,44 @@ public final class AuthenticationDialogBrowser extends Browser
 
 	/**
 	 * <p>
+	 * </p>
+	 * @param composite
+	 * @param layout
+	 * @param appId
+	 * @param appSecret
+	 * @param redirectUri
+	 * @param permissions
+	 * @param authListener
+	 */
+	public AuthenticationDialogBrowser(Composite composite, int layout,
+		String appId, String appSecret, String redirectUri,
+		String[] permissions, AuthenticationListener authListener) {
+		super(composite, layout);
+		//
+		setAppId(appId);
+		setAppSecret(appSecret);
+		setRedirectUri(redirectUri);
+		setPermissions(permissions);
+		//
+		authListeners = new Vector();
+		if (authListener != null) {
+			authListeners.addElement(authListener);	
+		}
+		//
+		addProgressListener(new AuthenticationDialogProgressListener());
+	}
+
+	/**
+	 * <p>
 	 * Creates an instance of LoginPage.
 	 * </p>
 	 * @param composite Composite.
 	 * @param layout Layout.
 	 */
 	public AuthenticationDialogBrowser(Composite composite, int layout) {
-		super(composite, layout);
+		this(composite, layout, null, null, null, null, null);
 		//
-		addProgressListener(new LoginDialogProgressListener());
+		addProgressListener(new AuthenticationDialogProgressListener());
 	}
 	
 	/**
@@ -130,18 +160,35 @@ public final class AuthenticationDialogBrowser extends Browser
 
 	/**
 	 * <p>
-	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#addLoginDialogListener(com.emobtech.facebook.api.auth.AuthenticationListener)
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#addAuthenticationListener(com.emobtech.facebook.api.auth.AuthenticationListener)
 	 */
-	public void addLoginDialogListener(AuthenticationListener listener) {
-		loginListener = listener;
+	public void addAuthenticationListener(AuthenticationListener listener) {
+		if (!authListeners.contains(listener)) {
+			authListeners.addElement(listener);
+		}
+	}
+	
+	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#removeAuthenticationListener(com.emobtech.facebook.api.auth.AuthenticationListener)
+	 */
+	public void removeAuthenticationListener(AuthenticationListener listener) {
+		if (authListeners.contains(listener)) {
+			authListeners.removeElement(listener);
+		}
 	}
 
 	/**
 	 * @see com.emobtech.facebook.api.auth.ui.AuthenticationDialog#login()
 	 */
 	public void login() {
-		if (StringUtil.isEmpty(appId) || StringUtil.isEmpty(appSecret)) {
-			throw new IllegalArgumentException();
+		if (StringUtil.isEmpty(appId)) {
+			throw new IllegalArgumentException("App ID must not be null.");
+		}
+		if (StringUtil.isEmpty(appSecret)) {
+			throw new IllegalArgumentException("App Secret must not be null.");
+		}
+		if (StringUtil.isEmpty(redirectUri)) {
+			throw new IllegalArgumentException("RedirectURI must not be null.");
 		}
 		//
 		StringBuffer scope = new StringBuffer();
@@ -173,13 +220,57 @@ public final class AuthenticationDialogBrowser extends Browser
 		//
 		refresh();
 	}
+	
+	/**
+	 * @param accessToken
+	 */
+	private void triggerOnAuthorize(String accessToken) {
+		Enumeration listeners = authListeners.elements();
+		//
+		while (listeners.hasMoreElements()) {
+			AuthenticationListener listener =
+				(AuthenticationListener)listeners.nextElement();
+			//
+			listener.onAuthorize(accessToken);
+		}
+	}
+
+	/**
+	 * @param error
+	 * @param message
+	 */
+	private void triggerOnFail(String error, String message) {
+		Enumeration listeners = authListeners.elements();
+		//
+		while (listeners.hasMoreElements()) {
+			AuthenticationListener listener =
+				(AuthenticationListener)listeners.nextElement();
+			//
+			listener.onFail(error, message);
+		}
+	}
+	
+	/**
+	 * @param message
+	 */
+	private void triggerOnAccessDenied(String message) {
+		Enumeration listeners = authListeners.elements();
+		//
+		while (listeners.hasMoreElements()) {
+			AuthenticationListener listener =
+				(AuthenticationListener)listeners.nextElement();
+			//
+			listener.onAccessDenied(message);
+		}
+	}
 
 	/**
 	 * <p>
 	 * </p>
 	 * @author ernandes@gmail.com
 	 */
-	private class LoginDialogProgressListener implements ProgressListener {
+	private class AuthenticationDialogProgressListener
+		implements ProgressListener {
 		/**
 		 * @see org.eclipse.swt.browser.ProgressListener#changed(org.eclipse.swt.browser.ProgressEvent)
 		 */
@@ -187,7 +278,7 @@ public final class AuthenticationDialogBrowser extends Browser
 			final String url = getUrl();
 			//
 			if (!ignoreEvents
-					&& loginListener != null
+					&& !authListeners.isEmpty()
 					&& url.startsWith(redirectUri)) {
 				ignoreEvents = true;
 				//
@@ -199,19 +290,18 @@ public final class AuthenticationDialogBrowser extends Browser
 						AccessToken.Response r =
 							(AccessToken.Response)tokenReq.process(code);
 						//
-						loginListener.onAuthorize(r.getToken());
+						triggerOnAuthorize(r.getToken());
 					} catch (IOException e) {
-						loginListener.onFail(
-							"error_access_token", e.getMessage());
+						triggerOnFail("error_access_token", e.getMessage());
 					}
 				} else if (url.indexOf("error_reason=") != -1) {
 					String err = getUrlParamValue(url, "error_reason");
 					String msg = getUrlParamValue(url, "error_description");
 					//
 					if ("user_denied".equals(err)) {
-						loginListener.onAccessDenied(msg);
+						triggerOnAccessDenied(msg);
 					} else {
-						loginListener.onFail(err, msg);
+						triggerOnFail(err, msg);
 					}
 				} else {
 					throw new IllegalStateException("Condition not expected.");
