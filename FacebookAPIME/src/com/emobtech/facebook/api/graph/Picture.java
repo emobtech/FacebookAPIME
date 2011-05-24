@@ -1,3 +1,11 @@
+/*
+ * Picture.java
+ * 24/05/2011
+ * Facebook API Micro Edition
+ * Copyright(c) Ernandes Mourao Junior (ernandes@gmail.com)
+ * All rights reserved
+ * GNU General Public License (GPL) Version 2, June 1991
+ */
 package com.emobtech.facebook.api.graph;
 
 import java.io.ByteArrayOutputStream;
@@ -12,9 +20,11 @@ import com.twitterapime.util.StringUtil;
 
 /**
  * <p>
- * Represents a request for the user's profile picture.
+ * This class defines a request that retrieves a user's profile picture.
  * </p>
- * @author ernandes@gmail.com
+ * @author Ernandes Mourao Junior (ernandes@gmail.com)
+ * @version 1.0
+ * @since 1.0
  */
 public final class Picture implements Request {
 	/**
@@ -26,7 +36,7 @@ public final class Picture implements Request {
 	
 	/**
 	 * <p>
-	 * Creates a request for the given user's profile picture.
+	 * Create an instance of Picture class.
 	 * </p>
 	 * @param userId User Id.
 	 * @throws IllegalArgumentException If user Id is null.
@@ -87,9 +97,11 @@ public final class Picture implements Request {
 	
 	/**
 	 * <p>
-	 * Result of profile picture request.
+	 * Picture's response class.
 	 * </p>
-	 * @author ernandes@gmail.com
+	 * @author Ernandes Mourao Junior (ernandes@gmail.com)
+	 * @version 1.0
+	 * @since 1.0
 	 */
 	public static class Response implements com.emobtech.facebook.api.Response {
 		/**
@@ -101,7 +113,7 @@ public final class Picture implements Request {
 		
 		/**
 		 * <p>
-		 * Creates an instance of Result.
+		 * Create an instance of Result class.
 		 * </p>
 		 * @param data Image data.
 		 */
@@ -111,7 +123,7 @@ public final class Picture implements Request {
 		
 		/**
 		 * <p>
-		 * Returns image data.
+		 * Return image data.
 		 * </p>
 		 * @return Data.
 		 */

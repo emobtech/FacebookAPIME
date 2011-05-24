@@ -1,3 +1,11 @@
+/*
+ * AccessToken.java
+ * 24/05/2011
+ * Facebook API Micro Edition
+ * Copyright(c) Ernandes Mourao Junior (ernandes@gmail.com)
+ * All rights reserved
+ * GNU General Public License (GPL) Version 2, June 1991
+ */
 package com.emobtech.facebook.api.auth;
 
 import java.io.IOException;
@@ -8,8 +16,13 @@ import com.twitterapime.io.HttpResponse;
 import com.twitterapime.util.StringUtil;
 
 /**
- * @author 82177082315
- *
+ * <p>
+ * This class defines a request that retrieves an access token. This token will
+ * be used to sign all following requests for a given account to Facebook.
+ * </p>
+ * @author Ernandes Mourao Junior (ernandes@gmail.com)
+ * @version 1.0
+ * @since 1.0
  */
 public final class AccessToken implements Request {
 	/**
@@ -35,13 +48,13 @@ public final class AccessToken implements Request {
 	
 	/**
 	 * <p>
-	 * Returns the value of a given param in the Url.
+	 * Get the value of a given param in the Url.
 	 * </p>
 	 * @param url Url.
 	 * @param param Parameter.
 	 * @return Value.
 	 */
-	private static String getUrlParamValue(String url, String param) {
+	public static String getUrlParamValue(String url, String param) {
 		int ix = url.indexOf('?');
 		//
 		if (ix != -1) {
@@ -61,11 +74,12 @@ public final class AccessToken implements Request {
 	
 	/**
 	 * <p>
+	 * Create an instance of AccessToken class.
 	 * </p>
-	 * @param code
-	 * @param appId
-	 * @param appSecret
-	 * @param redirectUri
+	 * @param code Authentication code.
+	 * @param appId App id.
+	 * @param appSecret App secret.
+	 * @param redirectUri Redirect uri.
 	 * @throws IllegalArgumentException If any parameter is empty.
 	 */
 	public AccessToken(String appId, String appSecret, String redirectUri) {
@@ -85,12 +99,7 @@ public final class AccessToken implements Request {
 	}
 
 	/**
-	 * <p>
-	 * Processes the request.
-	 * </p>
-	 * @param code Authorization code returned by Login Dialog.
-	 * @return Result of request.
-	 * @throws IOException If any I/O error occurs during processing.
+	 * @see com.emobtech.facebook.api.Request#process(java.lang.String)
 	 */
 	public com.emobtech.facebook.api.Response process(String code)
 		throws IOException {
@@ -114,17 +123,24 @@ public final class AccessToken implements Request {
 	
 	/**
 	 * <p>
+	 * AccessToken's response class.
 	 * </p>
-	 * @author 82177082315
+	 * @author Ernandes Mourao Junior (ernandes@gmail.com)
+	 * @version 1.0
+	 * @since 1.0
 	 */
 	public static class Response implements com.emobtech.facebook.api.Response {
 		/**
 		 * <p>
+		 * Access Token.
 		 * </p>
 		 */
 		private String token;
 		
 		/**
+		 * <p>
+		 * Create an instance of Response class.
+		 * </p>
 		 * @param token
 		 */
 		public Response(String token) {
@@ -132,7 +148,10 @@ public final class AccessToken implements Request {
 		}
 		
 		/**
-		 * @return
+		 * <p>
+		 * Get the access token.
+		 * </p>
+		 * @return Token.
 		 */
 		public String getToken() {
 			return token;
