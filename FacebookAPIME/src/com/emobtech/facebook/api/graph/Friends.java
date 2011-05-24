@@ -1,3 +1,11 @@
+/*
+ * Friends.java
+ * 24/05/2011
+ * Facebook API Micro Edition
+ * Copyright(c) Ernandes Mourao Junior (ernandes@gmail.com)
+ * All rights reserved
+ * GNU General Public License (GPL) Version 2, June 1991
+ */
 package com.emobtech.facebook.api.graph;
 
 import java.io.IOException;
@@ -13,9 +21,11 @@ import com.twitterapime.io.HttpRequest;
 
 /**
  * <p>
- * Represents a request for the user's list of friends.
+ * This class defines a request that retrieves the friends list.
  * </p>
- * @author ernandes@gmail.com
+ * @author Ernandes Mourao Junior (ernandes@gmail.com)
+ * @version 1.0
+ * @since 1.0
  */
 public final class Friends implements Request {
 	/**
@@ -46,7 +56,7 @@ public final class Friends implements Request {
 
 	/**
 	 * <p>
-	 * Creates a request for the user's list of friends.
+	 * Create an instance of Friends class.
 	 * </p>
 	 */
 	public Friends() {
@@ -75,9 +85,11 @@ public final class Friends implements Request {
 	
 	/**
 	 * <p>
-	 * Response of friends request.
+	 * Friends's response class.
 	 * </p>
-	 * @author ernandes@gmail.com
+	 * @author Ernandes Mourao Junior (ernandes@gmail.com)
+	 * @version 1.0
+	 * @since 1.0
 	 */
 	public static class Response implements com.emobtech.facebook.api.Response,
 		Enumeration {
@@ -97,7 +109,7 @@ public final class Friends implements Request {
 		
 		/**
 		 * <p>
-		 * Creates an instance of Result.
+		 * Create an instance of Result class.
 		 * </p>
 		 * @param friendsData Friends data.
 		 */
@@ -108,7 +120,7 @@ public final class Friends implements Request {
 		
 		/**
 		 * <p>
-		 * Returns friend's Id.
+		 * Return friend's Id.
 		 * </p>
 		 * @return Id.
 		 */
@@ -118,7 +130,7 @@ public final class Friends implements Request {
 
 		/**
 		 * <p>
-		 * Returns friend's name.
+		 * Return friend's name.
 		 * </p>
 		 * @return Name.
 		 */

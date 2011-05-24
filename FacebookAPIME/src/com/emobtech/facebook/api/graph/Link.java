@@ -1,3 +1,11 @@
+/*
+ * Link.java
+ * 24/05/2011
+ * Facebook API Micro Edition
+ * Copyright(c) Ernandes Mourao Junior (ernandes@gmail.com)
+ * All rights reserved
+ * GNU General Public License (GPL) Version 2, June 1991
+ */
 package com.emobtech.facebook.api.graph;
 
 import java.io.IOException;
@@ -9,9 +17,11 @@ import com.twitterapime.util.StringUtil;
 
 /**
  * <p>
- * Represents a link to be shared on user's wall.
+ * This class defines a request that shares a link.
  * </p>
- * @author ernandes@gmail.com
+ * @author Ernandes Mourao Junior (ernandes@gmail.com)
+ * @version 1.0
+ * @since 1.0
  */
 public final class Link implements Request {
 	/**
@@ -65,7 +75,7 @@ public final class Link implements Request {
 	
 	/**
 	 * <p>
-	 * Creates a new link to share.
+	 * Create an instance of Link class.
 	 * </p>
 	 * @param link Link.
 	 * @param pictureUri Picture Uri.
@@ -93,7 +103,7 @@ public final class Link implements Request {
 
 	/**
 	 * <p>
-	 * Creates a new link to share.
+	 * Create an instance of Link class.
 	 * </p>
 	 * @param link Link.
 	 * @throws IllegalArgumentException If link is null.

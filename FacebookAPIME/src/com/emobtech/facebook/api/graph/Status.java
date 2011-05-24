@@ -1,3 +1,11 @@
+/*
+ * Status.java
+ * 24/05/2011
+ * Facebook API Micro Edition
+ * Copyright(c) Ernandes Mourao Junior (ernandes@gmail.com)
+ * All rights reserved
+ * GNU General Public License (GPL) Version 2, June 1991
+ */
 package com.emobtech.facebook.api.graph;
 
 import java.io.IOException;
@@ -9,9 +17,11 @@ import com.twitterapime.util.StringUtil;
 
 /**
  * <p>
- * Represents a status message to show on user's wall.
+ * This class defines a request that posts a status on wall.
  * </p>
- * @author ernandes@gmail.com
+ * @author Ernandes Mourao Junior (ernandes@gmail.com)
+ * @version 1.0
+ * @since 1.0
  */
 public final class Status implements Request {
 	/**
@@ -30,7 +40,7 @@ public final class Status implements Request {
 	
 	/**
 	 * <p>
-	 * Creates a new status message.
+	 * Create an instance of Status class.
 	 * </p>
 	 * @param message Message.
 	 * @param toUserId Recipient Id.
@@ -47,7 +57,7 @@ public final class Status implements Request {
 
 	/**
 	 * <p>
-	 * Creates a new status message.
+	 * Create an instance of Status class.
 	 * </p>
 	 * @param message Message.
 	 * @throws IllegalArgumentException if message is null.
