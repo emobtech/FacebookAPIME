@@ -195,7 +195,7 @@ public abstract class AuthDialogWrapper {
 		String url =
 			"http://www.facebook.com/dialog/oauth?client_id=" + appId +
 			"&redirect_uri=" + redirectUri +
-			"&display=wap" + 
+			"&display=" + getDisplayParamValue() + 
 			"&scope=" + scope.toString();
 		//
 		loadUrl(url);
@@ -219,11 +219,30 @@ public abstract class AuthDialogWrapper {
 	
 	/**
 	 * <p>
-	 * Loads the given Url in the browser component.
+	 * Load the given Url in the browser component.
 	 * </p>
 	 * @param url Url.
 	 */
 	protected abstract void loadUrl(String url);
+	
+	/**
+	 * <p>
+	 * Load the given HTML content in the browser component.
+	 * </p>
+	 * @param htmlContent HTML content.
+	 */
+	protected abstract void loadHTML(String htmlContent);
+
+	/**
+	 * <p>
+	 * Return the display parameter's value that specifies that type of 
+	 * interface on which the Facebook's login page will be presented.
+	 * </p>
+	 * @return Display.
+	 */
+	protected String getDisplayParamValue() {
+		return "wap";
+	}
 	
 	/**
 	 * <p>
@@ -236,6 +255,8 @@ public abstract class AuthDialogWrapper {
 		if (url.startsWith(redirectUri)	&& !authListeners.isEmpty()) {
 			//
 			if (url.indexOf("code=") != -1) {
+				displayAuthSuccessPage();
+				//
 				try {
 					String code = AccessToken.getUrlParamValue(url, "code");
 					AccessToken tokenReq =
@@ -253,8 +274,10 @@ public abstract class AuthDialogWrapper {
 					AccessToken.getUrlParamValue(url, "error_description");
 				//
 				if ("user_denied".equals(err)) {
+					displayAuthDeniedPage(msg);
 					triggerOnAccessDenied(msg);
 				} else {
+					displayAuthErrorPage(err, msg);
 					triggerOnFail(err, msg);
 				}
 			} else {
@@ -263,6 +286,59 @@ public abstract class AuthDialogWrapper {
 		}
 	}
 	
+	/**
+	 * <p>
+	 * Display the Authorization success page. Displayed when the authorization
+	 * is granted.
+	 * </p>
+	 */
+	protected void displayAuthSuccessPage() {
+		String html =
+			"<html><body>" +
+			"<center><font color=\"blue\"><b>Facebook</b></font></center><br/>"+
+			"<center>Authorization granted!<br/><br/>Close this page.</center>"+ 
+			"</body></html>";
+		//
+		loadHTML(html);
+	}
+	
+	/**
+	 * <p>
+	 * Display the Authorization denied page. Displayed when the authorization
+	 * is denied.
+	 * </p>
+	 * @param message Message.
+	 */
+	protected void displayAuthDeniedPage(String message) {
+		String html =
+			"<html><body>" +
+			"<center><font color=\"blue\"><b>Facebook</b></font></center><br/>"+
+			"<center>Authorization denied: " + message + 
+			"<br/><br/>Close this page.</center>" + 
+			"</body></html>";
+		//
+		loadHTML(html);
+	}
+
+	/**
+	 * <p>
+	 * Display the Authorization error page. Displayed when the authorization
+	 * fails.
+	 * </p>
+	 * @param error Error.
+	 * @param message Message.
+	 */
+	protected void displayAuthErrorPage(String error, String message) {
+		String html =
+			"<html><body>" +
+			"<center><font color=\"blue\"><b>Facebook</b></font></center><br/>"+
+			"<center>Authorization failed: " + message + " (" + error + ")" + 
+			"<br/><br/>Close this page.</center>" + 
+			"</body></html>";
+		//
+		loadHTML(html);
+	}
+
 	/**
 	 * <p>
 	 * Trigger authentication listeners about on authorize event.

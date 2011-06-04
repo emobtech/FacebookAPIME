@@ -117,7 +117,7 @@ public final class Dispatcher {
 			}
 		};
 		//
-		new Thread(task).run();
+		new Thread(task).start();
 	}
 	
 	/**

@@ -94,6 +94,13 @@ public final class BrowserAuthDialogWrapper extends AuthDialogWrapper {
 	}
 	
 	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#loadHTML(java.lang.String)
+	 */
+	protected void loadHTML(String htmlContent) {
+		browser.setText(htmlContent);
+	}
+	
+	/**
 	 * @author ernandes@gmail.com
 	 */
 	private class ProgressListenerAuth implements ProgressListener {
