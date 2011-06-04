@@ -86,6 +86,13 @@ public final class HTMLComponentAutDialogWrapper extends AuthDialogWrapper {
 	}
 	
 	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#loadHTML(java.lang.String)
+	 */
+	protected void loadHTML(String htmlContent) {
+		htmlComponent.setBodyText(htmlContent);
+	}
+	
+	/**
 	 * @author ernandes@gmail.com
 	 */
 	private class HTMLCallbackAuth implements HTMLCallback {

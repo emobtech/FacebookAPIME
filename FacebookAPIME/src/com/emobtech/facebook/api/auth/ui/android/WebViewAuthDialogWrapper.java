@@ -86,6 +86,20 @@ public final class WebViewAuthDialogWrapper extends AuthDialogWrapper {
 	}
 	
 	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#loadHTML(java.lang.String)
+	 */
+	protected void loadHTML(String htmlContent) {
+		webView.loadData(htmlContent, "text/html", "utf-8");
+	}
+	
+	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#getDisplayParamValue()
+	 */
+	protected String getDisplayParamValue() {
+		return "touch";
+	}
+	
+	/**
 	 * @author ernandes@gmail.com
 	 */
 	private class WebViewClientAuth extends WebViewClient {

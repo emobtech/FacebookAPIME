@@ -88,6 +88,13 @@ public final class BrowserFieldAuthDialogWrapper extends AuthDialogWrapper {
 	}
 	
 	/**
+	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#loadHTML(java.lang.String)
+	 */
+	protected void loadHTML(String htmlContent) {
+		browserField.displayContent(htmlContent, redirectUri);
+	}
+	
+	/**
 	 * @author ernandes@gmail.com
 	 */
 	private class BrowserFieldListenerAuth extends BrowserFieldListener {
