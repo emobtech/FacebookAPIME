@@ -264,7 +264,7 @@
 				<include name="${fbapime.lib.jsonorg}" if="fbapime.building.rim"/>
 				<include name="${fbapime.lib.twapime_rim}" if="fbapime.building.rim"/>
 			</zipfileset>	
-			<zipfileset dir="${fbapime.version.path.dist}" prefix="${fbapime.package}/dist" includes="**/*.jar"/>
+			<zipfileset dir="${fbapime.version.path.dist}" prefix="${fbapime.package}/dist" includes="${fbapime.version.jar}"/>
 		    <zipfileset dir="${fbapime.path.javadoc}" prefix="${fbapime.package}/doc/javadoc" includes="**/*.*"/>
 			<zipfileset dir="${basedir}" prefix="${fbapime.package}" includes="LICENSE.txt"/>
 			<zipfileset dir="${basedir}" prefix="${fbapime.package}" includes="READ-ME.txt"/>
