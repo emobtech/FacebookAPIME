@@ -47,7 +47,10 @@ platforms.
 
  REMARKS:
 ********************************************************************************
-- None
+- All libs and API's jar file in the release package for RIM are already 
+  preverified. This means, you will not have problems to add them your project. 
+  Regardubg other platforms, except Android, only the API's jar file is 
+  preverified.
 
  COMING NEXT VERSION: 1.1
 ********************************************************************************
