@@ -280,8 +280,6 @@ public abstract class AuthDialogWrapper {
 					displayAuthErrorPage(err, msg);
 					triggerOnFail(err, msg);
 				}
-			} else {
-				throw new IllegalStateException("Condition not expected.");
 			}
 		}
 	}

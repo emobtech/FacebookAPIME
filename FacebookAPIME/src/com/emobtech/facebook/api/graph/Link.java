@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import com.emobtech.facebook.api.Request;
 import com.emobtech.facebook.api.Response;
+import com.emobtech.facebook.api.auth.Permission;
 import com.twitterapime.io.HttpRequest;
 import com.twitterapime.util.StringUtil;
 
@@ -77,6 +78,9 @@ public final class Link implements Request {
 	 * <p>
 	 * Create an instance of Link class.
 	 * </p>
+	 * <p>
+	 * Require {@link Permission#PUBLISH_STREAM}.
+	 * </p>
 	 * @param link Link.
 	 * @param pictureUri Picture Uri.
 	 * @param name Name.
@@ -104,6 +108,9 @@ public final class Link implements Request {
 	/**
 	 * <p>
 	 * Create an instance of Link class.
+	 * </p>
+	 * <p>
+	 * Require {@link Permission#PUBLISH_STREAM}.
 	 * </p>
 	 * @param link Link.
 	 * @throws IllegalArgumentException If link is null.

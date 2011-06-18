@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import com.emobtech.facebook.api.Request;
 import com.emobtech.facebook.api.Response;
+import com.emobtech.facebook.api.auth.Permission;
 import com.twitterapime.io.HttpRequest;
 import com.twitterapime.util.StringUtil;
 
@@ -42,6 +43,9 @@ public final class Status implements Request {
 	 * <p>
 	 * Create an instance of Status class.
 	 * </p>
+	 * <p>
+	 * Require {@link Permission#PUBLISH_STREAM}.
+	 * </p>
 	 * @param message Message.
 	 * @param toUserId Recipient Id.
 	 * @throws IllegalArgumentException if message is null.
@@ -58,6 +62,9 @@ public final class Status implements Request {
 	/**
 	 * <p>
 	 * Create an instance of Status class.
+	 * </p>
+	 * <p>
+	 * Require {@link Permission#PUBLISH_STREAM}.
 	 * </p>
 	 * @param message Message.
 	 * @throws IllegalArgumentException if message is null.
