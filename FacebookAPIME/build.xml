@@ -133,7 +133,18 @@
 	</target>
 
 	<target name="-preverify_rim" if="fbapime.building.rim">
-		<wtkpreverify classpathref="fbapime.classpath" jarfile="${fbapime.version.path.dist}/${fbapime.version.jar}"/>
+		<exec executable="${fbapime.path.rim.preverify}" failonerror="true">
+		    <arg line='-classpath "${fbapime.path.lib.rim}" -d "${fbapime.version.path.dist}" "${fbapime.path.lib.jsonorg}"' />
+		</exec>
+		<exec executable="${fbapime.path.rim.preverify}" failonerror="true">
+		    <arg line='-classpath "${fbapime.path.lib.rim}" -d "${fbapime.version.path.dist}" "${fbapime.path.lib.kxml2}"' />
+		</exec>
+		<exec executable="${fbapime.path.rim.preverify}" failonerror="true">
+		    <arg line='-classpath "${fbapime.path.lib.rim};${fbapime.path.lib.jsonorg};${fbapime.path.lib.kxml2}" -d "${fbapime.version.path.dist}" "${fbapime.path.lib.twapime_rim}"' />
+		</exec>
+		<exec executable="${fbapime.path.rim.preverify}" failonerror="true">
+		    <arg line='-classpath "${fbapime.path.lib.rim};${fbapime.path.lib.jsonorg};${fbapime.path.lib.kxml2};${fbapime.path.lib.twapime_rim}" -d "${fbapime.version.path.dist}" "${fbapime.version.path.dist}/${fbapime.version.jar}"' />
+		</exec>
 	</target>
 	
 	<target name="-preverify_lwuit" if="fbapime.building.lwuit">
@@ -239,14 +250,19 @@
 			<zipfileset dir="${fbapime.path.src.preprocessed}" prefix="${fbapime.package}/src" includes="**/*.*"/>
 			<zipfileset dir="${fbapime.path.lib}" prefix="${fbapime.package}/lib">
 				<include name="${fbapime.lib.kxml2}" if="fbapime.building.eswt"/>
-				<include name="${fbapime.lib.kxml2}" if="fbapime.building.rim"/>
 				<include name="${fbapime.lib.kxml2}" if="fbapime.building.lwuit"/>
-				<include name="${fbapime.lib.jsonorg}"/>
+				<include name="${fbapime.lib.jsonorg}" if="fbapime.building.eswt"/>
+				<include name="${fbapime.lib.jsonorg}" if="fbapime.building.android"/>
+				<include name="${fbapime.lib.jsonorg}" if="fbapime.building.lwuit"/>
 				<include name="${fbapime.lib.twapime_javame}" if="fbapime.building.eswt"/>
 				<include name="${fbapime.lib.twapime_android}" if="fbapime.building.android"/>
-				<include name="${fbapime.lib.twapime_rim}" if="fbapime.building.rim"/>
 				<include name="${fbapime.lib.twapime_javame}" if="fbapime.building.lwuit"/>
 				<include name="${fbapime.lib.lwuit}" if="fbapime.building.lwuit"/>
+			</zipfileset>	
+			<zipfileset dir="${fbapime.version.path.dist}" prefix="${fbapime.package}/lib">
+				<include name="${fbapime.lib.kxml2}" if="fbapime.building.rim"/>
+				<include name="${fbapime.lib.jsonorg}" if="fbapime.building.rim"/>
+				<include name="${fbapime.lib.twapime_rim}" if="fbapime.building.rim"/>
 			</zipfileset>	
 			<zipfileset dir="${fbapime.version.path.dist}" prefix="${fbapime.package}/dist" includes="**/*.jar"/>
 		    <zipfileset dir="${fbapime.path.javadoc}" prefix="${fbapime.package}/doc/javadoc" includes="**/*.*"/>
