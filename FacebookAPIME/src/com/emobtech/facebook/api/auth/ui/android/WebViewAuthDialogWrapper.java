@@ -93,13 +93,6 @@ public final class WebViewAuthDialogWrapper extends AuthDialogWrapper {
 	}
 	
 	/**
-	 * @see com.emobtech.facebook.api.auth.ui.AuthDialogWrapper#getDisplayParamValue()
-	 */
-	protected String getDisplayParamValue() {
-		return "touch";
-	}
-	
-	/**
 	 * @author ernandes@gmail.com
 	 */
 	private class WebViewClientAuth extends WebViewClient {
