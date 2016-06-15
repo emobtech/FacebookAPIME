@@ -246,5 +246,5 @@ In case of Facebook API ME has brought good benefits for you and/or your company
 
 ## External Links
 
-* [J2ME Group Blog](http://j2megroup.blogspot.com)
 * [eMob Tech](http://www.emobtech.com)
+* [J2ME Group Blog](http://j2megroup.blogspot.com)
