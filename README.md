@@ -24,21 +24,21 @@ Version | Date | Contents
 
 Below you will find a tutorial demonstrating what you need and how in order to work with Facebook API ME.
 
-### Registering an App
+### 1. Registering an App
 
 You need to register an app on **Facebook's Developer** [page](http://developers.facebook.com/). The process is pretty simple and straightforward. The goal of this registration is to obtain some keys that are required by authentication process: **App Id**, **App Secret** and **Redirect Uri**. This process is very similar to Twitter's app registration process.
 
 Once you have the keys, let get to the API itself.
 
-### Browser Component
+### 2. Browser Component
 
 In your app, you need to display Facebook's Login page, so your user can enter his credentials and then grant access to your app. This process is implemented by the API. You just need to provide a browser component instance and then the API takes care of the rest. Considering the **eSWT** version, you need to provide an instance of **[Browser](http://www.eclipse.org/ercp/eswt/gallery/gallery.php)** class, **Android**, **[WebView](http://developer.android.com/reference/android/webkit/WebView.html)** class, and **RIM**, **[BrowserField](http://www.blackberry.com/developers/docs/5.0.0api/net/rim/device/api/browser/field2/BrowserField.html)** class.
 
-### Wrapper Class
+### 3. Wrapper Class
 
 Once the browser instance is created, you have to wrap it with an instance of ***AuthDialogWrapper***  class. This class is responsible for managing the authentication and delegates the events to your app. Considering the eSWT version, you have to instantiate the ***BrowserAuthDialogWrapper*** subclass, Android, ***WebViewAuthDialogWrapper***, and RIM, ***BrowserFieldAuthDialogWrapper***.
 
-### Setting Up the Keys
+### 4. Setting Up the Keys
 
 The wrapper object must be set up, so it can handle the authentication process properly for you app. There are some "set" methods that can be used to inform your App Id, App Secret and Redirect Uri. If you prefer, you can enter the keys in the constructor.
 
@@ -53,7 +53,7 @@ pageWrapper.setRedirectUri("Redirect Uri goes here");
 ...
 ```
 
-### Permissions
+### 5. Permissions
 
 Most services provided by Facebook API requires explicit authorization by user. So, during the authentication process you must inform which permissions the services that you intend to work with, must be granted by user.
 
@@ -67,7 +67,7 @@ pageWrapper.setPermissions(
 
 This code snippet says the app will request permission to perform authorized requests on behalf of the user at any time (**OFFLINE_ACCESS**) and publish content to a user's feed at any time **PUBLISH_STREAM**. For the full list of permissions provided by Facebook API, click [here](http://developers.facebook.com/docs/authentication/permissions/).
 
-### Authentication Events
+### 6. Authentication Events
 
 In order to know if the user granted or denied permission to the app, you need to register a listener of the type ***AuthenticationListener***. This interface has three methods:
 
@@ -100,7 +100,7 @@ public void onFail(String error, String message) {
 ...
 ```
 
-### Displaying Login Page
+### 7. Displaying Login Page
 
 The Facebook's Login page will just be requested and displayed, as soon as the method ***login()*** be called.
 
@@ -110,7 +110,7 @@ pageWrapper.login();
 ...
 ```
 
-### Dispatching Requests
+### 8. Dispatching Requests
 
 The API also provides a helper class, called ***Dispatcher***, responsible for dispatching the requests, synchronously or asynchronously, to Facebook API. Each Dispatcher instance must be associated to an access token, so all requests dispatched be signed automatically.
 
@@ -120,7 +120,7 @@ Dispatcher dispatcher = Dispatcher.getInstance("Access Token goes here");
 ...
 ```
 
-### Dispatcher Events
+### 9. Dispatcher Events
 
 When you work with asynchronous requests, it is recommended to register a listener in order to know whether they were successfully processed. This listener is defined by ***DispatcherListener*** interface. This interface has two methods:
 
@@ -146,7 +146,7 @@ public void onFail(Request request, Throwable error) {
 ...
 ```
 
-### Posting on User's Wall
+### 10. Posting on User's Wall
 
 To publish a text on user's wall is pretty simple. Just instantiate an object of ***Status*** class, informing the text in the constructor. The other constructor allows you to post a text on a friend's wall.
 
@@ -161,7 +161,7 @@ dispatcher.dispatch(status);
 ...
 ```
 
-### Sharing Link
+### 11. Sharing Link
 
 To share a link is as easy as posting on wall. Just instantiate an object of ***Link*** class, informing the URL in the constructor. The other constructor allows you to define how the link will be displayed.
 
@@ -183,7 +183,7 @@ dispatcher.dispatch(link);
 ...
 ```
 
-### Retrieving Friends List
+### 12. Retrieving Friends List
 
 To retrieve the user's friends list just instantiate an object of ***Friends*** class. This request returns an instance of ***Friends.Response***, which is ***Enumeration***.
 
@@ -201,7 +201,7 @@ while (friendsEnum.hasMoreElements()) {
 ...
 ```
 
-### Profile Picture
+### 13. Profile Picture
 
 To retrieve a friend's profile picture, create an instance of ***Picture*** class, informing the friend's Id in the constructor. This request returns an instance of ***Picture.Response***.
 
@@ -213,7 +213,7 @@ byte[] imageBytes = pictureResp.getData();
 ...
 ```
 
-### Revoking Authorization
+### 14. Revoking Authorization
 
 Just in case an user decides to remove your app's authorization to access his Facebook account. For that, use the request defined by ***RevokeAuthorization*** class, informing the access token in the constructor. Once this request is processed, the access token is expired and you app will no longer be able to access the user's account. To access it again, the entire authentication process must be redone.
 
@@ -224,7 +224,7 @@ dispatcher.dispatch(revoke);
 ...
 ```
 
-### Log out
+### 15. Log out
 
 The wrapper class ***AuthDialogWrapper*** has a method called ***logout()***. Call this method in order to remove any cookie or logged user's data left by Facebook's Login page in our browser component. It is recommend to call this method when the user removes the app's authorization.
 
